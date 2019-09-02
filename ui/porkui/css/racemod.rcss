@@ -92,3 +92,7 @@ a.button, button {
 	height: auto;
 	width: 80%;
 }
+
+tabset tab.side-tab {
+	max-width: 100dp;
+}

@@ -1,0 +1,109 @@
+<rml>
+<head>
+	<title>home</title>
+	<link type="text/template" href="template_racemod.rml" />
+	<link rel="stylesheet" type="text/css" href="css/racemod_intro.rcss" />
+	<script>
+		Cvar racemod_seenintro( "racemod_seenintro", "0", CVAR_ARCHIVE | CVAR_USERINFO );
+		void onPlayerLoad( Element@ body, Event@ evt )
+		{
+			onTemplateLoad( body, evt );
+		}
+
+		void onPlayerShow( Element@ body, Event@ evt )
+		{
+			// force uncheck confirm checkbox
+			window.document.body.getElementById("confirm").removeAttr("checked");
+
+			onCustomShow( body, evt );
+		}
+
+		void setupCustomMenu( Element @body )
+		{
+			setModalY( 0.5f );
+		}
+
+		void onCloseButton( Element @self, Event @evt )
+		{
+			window.close();
+		}
+		
+		void onCustomShow( Element @body, Event @evt )
+		{
+			setupCustomMenu( body );
+			animationsOnShow();
+		}
+
+		void onOKButton( Element @self, Event @evt )
+		{
+			// check if confirm checkbox is checked
+			bool checked = window.document.body.getElementById("confirm").hasAttr("checked");
+			bool recommended = window.document.body.getElementById("recommended").hasAttr("checked");
+
+			if ( checked )
+			{
+				racemod_seenintro.set(1);
+			}
+			
+			if ( recommended )
+			{
+				window.location = "racemod_main.rml?ignore=1&recommended=1";
+				return;
+			}
+
+			window.location = "racemod_main.rml?ignore=1";
+			return;
+		}
+	</script>
+</head>
+<body template="porkui_racemod" onload="$onPlayerLoad" onshow="$onPlayerShow">
+	<div id="menu-ingame">
+		<button id="close-button" onclick="$onCloseButton" />
+
+		<h1>Welcome to Racemod</h1>
+		<div id="menu-racemod">
+			<div id="bla">
+				This mod has several improvements from vanilla race.<br/>
+				The following binds are more or less required for racing:
+			</div>
+			<hr class="nicehr"/><br />
+			<div>
+				<div id="leftcolumn">
+					<optionsform id="binds-options-form">
+						<div class="title">Restart race</div>
+						<keyselect bind="join"/>
+						<div class="title"><t>Grenade Launcher</t> (GL)</div>
+						<keyselect bind="use Grenade Launcher"/>
+						<div class="title"><t>Rocket Launcher</t> (RL)</div>
+						<keyselect bind="use Rocket Launcher"/>
+						<div class="title"><t>Plasmagun</t> (PG)</div>
+						<keyselect bind="use Plasmagun"/>
+						<div class="title">Toggle practicemode</div>
+						<keyselect bind="practicemode"/>
+						<div class="title">Save position</div>
+						<keyselect bind="position save"/>
+						<div class="title">Noclip mode</div>
+						<keyselect bind="noclip"/>
+						<div class="title">Quickmenu</div>
+						<keyselect bind="+quickmenu"/>
+					</optionsform>
+				</div>
+				<div id="rightcolumn">
+					Racemod has its own in-game menu that you can open using F6 or pressing Escape and clicking the "Race options" button.
+				</div>
+			</div>
+			<hr class="nicehr"/><br />
+		</div>
+		<div id="intro_footer">
+			<div>
+				<input id="recommended" type="checkbox"/><div class="label">I want to use the recommended settings and hud.</div>
+			</div>
+			<div>
+				<input id="confirm" type="checkbox"/> <div class="label">Confirm you have read this.</div>
+			</div>
+			
+			<button onclick="$onOKButton">OK</button>
+		</div>
+	</div>
+</body>
+</rml>

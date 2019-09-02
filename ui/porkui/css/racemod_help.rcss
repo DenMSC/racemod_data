@@ -1,0 +1,83 @@
+#help-topics, #help-description {
+	float: left;
+	display: inline-block;
+	width: 50%;
+	height: 450dp;
+	overflow: auto;
+}
+
+#help-topics {
+	width: 20%;
+}
+
+#help-topics a {
+	display: block;
+	darken-font-effect: shadow;
+	darken-offset: 1dp 1dp;
+	darken-color: black;		
+	margin-bottom: 8dp;
+	padding: 8dp;
+	text-align: center;
+	color: #e86a2b;
+	sound-click: /sounds/menu/ok.wav;
+	ninep-decorator: ninepatch;
+	ninep-src: /ui/porkui/gfx/controls/button_purple;
+	ninep-coords: 0.125 0.125 0.125 0.125;
+	ninep-size: 4dp 4dp 4dp 4dp;
+}
+
+#help-topics a:hover, #help-topics a:focus {
+	color: #fff;
+	ninep-src: /ui/porkui/gfx/controls/button_lightpurple;
+} 
+
+#help-topics a:active {
+	color: #fff;
+	ninep-src: /ui/porkui/gfx/controls/button_purple_active;
+} 
+
+#help-description {
+	width: 78%;
+	padding-left: 2%;
+}
+
+#help-description code {
+	font-family: Droid Sans Mono;
+	background: rgba(255, 255, 255, 32);
+}
+
+table {
+	display: block;
+}
+
+table tr {
+	display: block;
+	padding: 4dp 4dp;
+}
+
+table tr:nth-child(odd) {
+	background-color: rgba(0, 0, 0, 64);
+}
+
+table td, table th {
+	display: inline-block;
+	width: 33%;
+	vertical-align: middle;
+	text-align: justify;
+}
+
+table#abbr td:nth-child(1), table#abbr th:nth-child(1) {
+	width: 20%;
+}
+
+table#abbr td:nth-child(2), table#abbr th:nth-child(2) {
+	width: 30%;
+}
+
+table#abbr td:nth-child(3), table#abbr th:nth-child(3) {
+	width: 50%;
+}
+
+img {
+	display: inline;
+}

@@ -1,0 +1,52 @@
+<rml>
+<head>
+	<title>home</title>
+	<link type="text/template" href="template_racemod.rml" />
+	<link rel="stylesheet" type="text/css" href="css/racemod_help.rcss" />
+	<script>
+		void onPlayerLoad( Element@ body, Event@ evt )
+		{
+			onTemplateLoad( body, evt );
+		}
+
+		void onPlayerShow( Element@ body, Event@ evt )
+		{
+			onCustomShow( body, evt );
+		}
+
+		void setupCustomMenu( Element @body )
+		{
+			setModalY( 0.5f );
+		}
+
+		void onCloseButton( Element @self, Event @evt)
+		{
+			window.close();
+		}
+		
+		void onCustomShow( Element @body, Event @evt )
+		{
+			setupCustomMenu( body );
+			animationsOnShow();
+		}
+
+		void OpenTopic( String page )
+		{
+			window.document.body.getElementById("help-description").setAttr('src', page);
+		}
+	</script>
+</head>
+<body template="porkui_racemod" onload="$onPlayerLoad" onshow="$onPlayerShow">
+	<div id="menu-ingame">
+		<button id="close-button" onclick="$onCloseButton" />
+
+		<h1>Racemod Help</h1>
+		<div id="menu-racemod">
+			<idiv id="help-topics" src="http://livesow.net/race/ui/help_pages/topics.php" nocache="1"></idiv>
+			<idiv id="help-description" nocache="1">
+				Select a topic on the left.
+			</idiv>
+		</div>
+	</div>
+</body>
+</rml>

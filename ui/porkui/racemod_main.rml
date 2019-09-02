@@ -1,23 +1,3 @@
-<!--
-Copyright (C) 2012 Jannik Kolodziej ("drahtmaul")
-
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
--->
-
 <rml>
 <head>
 	<title>home</title>
@@ -26,11 +6,29 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 	<script>
 		ElementFormControl@ hudClient;
 		ElementFormControl@ hudSpec;
-		Cvar cg_clientHUD( "cg_clientHUD", "", ::CVAR_ARCHIVE );
-		Cvar cg_specHUD( "cg_specHUD", "", ::CVAR_ARCHIVE );
+		Cvar cg_clientHUD( "cg_clientHUD", "default", ::CVAR_ARCHIVE );
+		Cvar cg_specHUD( "cg_specHUD", "default", ::CVAR_ARCHIVE );
+		Cvar racemod_seenintro( "racemod_seenintro", "0", ::CVAR_ARCHIVE | ::CVAR_USERINFO );
 
 		void onPlayerLoad( Element@ body, Event@ evt )
 		{
+			URL url( body.ownerDocument.URL );
+			const Dictionary @dict = url.getParameters();
+			String ignore = '';
+			String recommended = '';
+			dict.get( 'ignore', ignore );
+			dict.get( 'recommended', recommended );
+
+			if ( ignore != "1" && !CheckRead() )
+			{
+				return;
+			}
+
+			if ( recommended == "1" )
+			{
+				loadRecommended();
+			}
+
 			onTemplateLoad( body, evt );
 
 			@hudClient = body.getElementById( "hud-client" );
@@ -54,11 +52,18 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		void onPlayerShow( Element@ body, Event@ evt )
 		{
 			onCustomShow( body, evt );
+			loadSettings();
+		}
 
+		void loadSettings() {
+			Element@ body = window.document.body;
 			ElementOptionsForm@ f = body.getElementById("hud-options-form");
 			f.storeOptions();
 			
 			@f = body.getElementById("hud-options-extra-form");
+			f.storeOptions();
+
+			@f = body.getElementById("binds-options-form");
 			f.storeOptions();
 
 			@f = body.getElementById("game-options-form");
@@ -93,37 +98,28 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 			Element@ hudOptionsCustom = window.document.body.getElementById("hud-options-custom");
 
 			String@ contents = elem.getInnerRML();
+			String rml = "";
 			if ( contents.locate("Failed to load", 0) == 0 )
 			{
 				// no hud options file found
-				hudOptionsDefault.removeClass("hidden");
-				hudOptionsCustom.addClass("hidden");
+				rml += '<div class="title">Show Strafe HUD</div>';
+				rml += '<input cvar="cg_strafeHUD" type="checkbox" realtime="1"/>';
+
+				rml += '<div class="title">Show Speed</div>';
+				rml += '<input cvar="cg_showSpeed" type="checkbox" realtime="1"/>';
 			} else {
 				// hud options file found
-				hudOptionsDefault.addClass("hidden");
-				hudOptionsCustom.removeClass("hidden");
-				// hudOptionsCustom.setInnerRML(contents);
-
 				// parse hud options file
 				HUDOption@[] hudOptions = parseHUDOptions( contents );
 
-				String rml = "";
 				for ( uint i = 0; i < hudOptions.length; i++ ) 
 				{
-					HUDOption@ hudOption = hudOptions[i];
-					rml += '<div class="title">' + hudOption.title + '</div>';
-					rml += '<select cvar="' + hudOption.cvar + '" realtime="1">';
-					for ( uint j = 0; j < hudOption.options.length; j++ )
-					{
-						HUDOptionChoice@ choice= @hudOption.options[j];
-						rml += '<option value="' + choice.value + '">' + choice.title + '</option>';
-					}
-					rml += '</select>';
+					rml += hudOptions[i].render();
 				}
-				hudOptionsCustom.setInnerRML(rml);
 			}
-				ElementOptionsForm@ f = window.document.body.getElementById("hud-options-extra-form");
-				f.storeOptions();
+			hudOptionsDefault.setInnerRML(rml);
+			ElementOptionsForm@ f = window.document.body.getElementById("hud-options-extra-form");
+			f.storeOptions();
 		}
 
 		void setupCustomMenu( Element @body )
@@ -163,56 +159,119 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 		void btn_texturepack( Element@ self, Event@ evt )
 		{
 		}
+
+		void btn_recommended( Element@ self, Event@ evt )
+		{
+			loadRecommended();
+		}
+
+		void loadRecommended()
+		{
+			// game.exec( "exec configs/racemod_recommended.cfg silent\n" );
+			// can't execute configs in pk3's ?
+
+			game.execAppend('seta cg_clientHUD "ale_racemod"\n');
+			game.execAppend('seta cg_specHUD "ale_racemod"\n');
+
+			game.execAppend('seta cg_strafeHUD "1"\n');
+			game.execAppend('seta cg_showSpeed "1"\n');
+			game.execAppend('seta cg_showPressedKeys "1"\n');
+
+			game.execAppend('seta cg_raceGhosts "1"\n');
+			game.execAppend('seta cg_raceGhostsAlpha "0.5"\n');
+
+			game.execAppend("menu_open racemod_main ignore 1\n");
+			window.close();
+		}
+
+		bool CheckRead() {
+			if ( racemod_seenintro.boolean ) {
+				return true;
+			} else {
+				window.location = "racemod_intro.rml";
+				return false;
+			}
+		}
+
+		void btn_help( Element@ self, Event@ evt )
+		{
+			window.location = "racemod_help.rml";
+		}
 	</script>
 </head>
-<body template="porkui_racemod" onload="$onTemplateLoad" onshow="$onPlayerShow">
+<body template="porkui_racemod" onload="$onPlayerLoad" onshow="$onPlayerShow">
 	<div id="menu-ingame">
 		<button id="close-button" onclick="$onCloseButton" />
 
 		<h1>Racemod Options</h1>
 		<div id="menu-racemod">
 			<div id="leftcolumn">
-				<h2>Hud Options</h2>
-				<optionsform id="hud-options-form" onsubmit="$OptionsForm_OnSubmit">
-					<div class="title">Client HUD</div>
-					<dataselect id="hud-client" cvar="cg_clientHUD" source="huds.list" fields="name" valuefield="name" realtime="1" onchange="onHudSelect(self);" />
+				<tabset id="options-set">
+					<tab class="side-tab">Hud Options</tab>
+					<panel class="dropshadow">
+						<optionsform id="hud-options-form">
+							<div class="title">Client HUD</div>
+							<dataselect id="hud-client" cvar="cg_clientHUD" source="huds.list" fields="name" valuefield="name" realtime="1" onchange="onHudSelect(self);" />
 
-					<div class="title">Spectator HUD</div>
-					<dataselect id="hud-spec" cvar="cg_specHUD" source="huds.list" fields="name" valuefield="name" realtime="1" />
-				</optionsform>
+							<div class="title">Spectator HUD</div>
+							<dataselect id="hud-spec" cvar="cg_specHUD" source="huds.list" fields="name" valuefield="name" realtime="1" />
+						</optionsform>
 
-				<hr class="nicehr"/><br />
+						<hr class="nicehr"/><br />
 
-				<idiv id="hudopts-loader" src="" onload="$onHudOptsLoad" />
-				<optionsform id="hud-options-extra-form" onsubmit="$OptionsForm_OnSubmit">
-					<div id="hud-options-default" class="hidden">
-						<div class="title">Show Strafe HUD</div>
-						<input cvar="cg_strafeHUD" type="checkbox" realtime="1"/>
+						<idiv id="hudopts-loader" src="" onload="$onHudOptsLoad" />
+						<optionsform id="hud-options-extra-form">
+							<div id="hud-options-default"></div>
+						</optionsform>
+					</panel>
 
-						<div class="title">Show Speed</div>
-						<input cvar="cg_showSpeed" type="checkbox" realtime="1"/>
-					</div>
-					
-					<div id="hud-options-custom" class="hidden">
-					</div>
-				</optionsform>
+					<tab class="side-tab">Binds</tab>
+					<panel class="dropshadow">
+						<optionsform id="binds-options-form">
+							<div class="title">Restart race</div>
+							<keyselect bind="join"/>
+							<div class="title"><t>Grenade Launcher</t> (GL)</div>
+							<keyselect bind="use Grenade Launcher"/>
+							<div class="title"><t>Rocket Launcher</t> (RL)</div>
+							<keyselect bind="use Rocket Launcher"/>
+							<div class="title"><t>Plasmagun</t> (PG)</div>
+							<keyselect bind="use Plasmagun"/>
+							<div class="title">Toggle practicemode</div>
+							<keyselect bind="practicemode"/>
+							<div class="title">Save position</div>
+							<keyselect bind="position save"/>
+							<div class="title">Noclip mode</div>
+							<keyselect bind="noclip"/>
+							<div class="title">Quickmenu</div>
+							<keyselect bind="+quickmenu"/>
+							<div class="title">Open this menu</div>
+							<keyselect bind="gametypemenu"/>
+						</optionsform>
+					</panel>
 
-				<h2>Hud Options</h2>
-				<optionsform id="game-options-form" onsubmit="$OptionsForm_OnSubmit">
-						<div class="title">Enable transparent players</div>
-						<input cvar="cg_raceGhosts" type="checkbox" realtime="1"/>
-						<div class="title">Transparent players opacity</div>
-						<input cvar="cg_raceGhostsAlpha" class="slider" type="range" min="0" max="1" step="0.05" value="0" realtime="1"/>
-				</optionsform>
+					<tab class="side-tab">Game Options</tab>
+					<panel class="dropshadow">
+						<optionsform id="game-options-form">
+							<div class="title">Enable transparent players</div>
+							<input cvar="cg_raceGhosts" type="checkbox" realtime="1"/>
+							<div class="title">Transparent players opacity</div>
+							<input cvar="cg_raceGhostsAlpha" class="slider" type="range" min="0" max="1" step="0.05" value="0" realtime="1"/>
+							<div class="title">I have seen the intro message</div>
+							<input cvar="racemod_seenintro" type="checkbox" realtime="1"/>
+						</optionsform>
+					</panel>
+				</tabset>
 			</div>
 			<div id="rightcolumn">
 				<h2>Commands</h2>
 				<div>
+					<button onclick="$btn_recommended">Recommended settings</button>
 					<button onclick="$btn_toplist">Show toplist</button>
 					<button onclick="$btn_randmap">Vote random map</button>
 				</div>
 				<h2>Help</h2>
 				<div>
+					<button onclick="$btn_help">Help</button>
 					<a class="button" href="https://www.youtube.com/watch?v=ZXYvRqMTqao" target="_browser">Race Tutorial<br />(opens in browser)</a>
 					<button onclick="$btn_vertexlight">Toggle vertexlight<br />(fixes some maps)</button>
 					<!-- <button onclick="$btn_texturepack">Texture pack?</button> -->
