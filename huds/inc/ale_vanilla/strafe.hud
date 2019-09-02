@@ -1,0 +1,67 @@
+if %SHOW_STRAFE == 1
+if %MATCH_STATE == 3
+
+	setScale #DEFAULTSCALE
+	setCursor 400, 300
+	moveCursor 0, -20
+	if %STRAFEANGLE > 0
+		setScale #SCALEBYWIDTH
+
+		//set size of arrows
+		if 1 & %SHOW_SPEED
+		setSize 0.03 * 4500 - %STRAFEANGLE, 10
+		endif
+		if 2 & %SHOW_SPEED
+		setSize 0.03 * 4500 - %STRAFEANGLE, 6
+		endif
+
+		//set color of arrows
+		//default: white
+		setColor 1, 1, 1, 0.8
+		//negative acceleration: red
+		if -5000 > %ACCELERATION
+			setColor 1, 0, 0, 0.5
+		endif
+		//good strafe: green
+		if 1 < %ACCELERATION
+			setColor 0, 1, 0, 0.5
+		endif
+
+		//standard dotstrafer
+		//move cursor in position and draw arrows
+		moveCursor 0.03 * %DIFF_ANGLE + %STRAFEANGLE , 0
+		setAlign #LEFT, #BOTTOM
+		drawPicByName gfx/hud/racesow/strafearrow_right
+
+		moveCursor -0.06 * %STRAFEANGLE , 0
+		setAlign #RIGHT, #BOTTOM
+		drawPicByName gfx/hud/racesow/strafearrow_left
+
+		//move Cursor back to the middle
+		moveCursor -0.03 * %STRAFEANGLE + %DIFF_ANGLE, 0
+		moveCursor 0.06 * %STRAFEANGLE, 0
+
+	endif
+	//set size,color and draw "crosshair"
+	setScale #NOSCALE
+	if 1 & %SHOW_SPEED
+		setSize 3, %VIDWIDTH / 80 // (800 / 80) = 10
+	endif
+	if 2 & %SHOW_SPEED
+		setSize 3, %VIDWIDTH / 140 // (800 / 80) = 10
+	endif
+	setColor 0, 0, 0, 1
+	setAlign #CENTER, #BOTTOM
+	drawPicByName gfx/ui/white
+	if 1 & %SHOW_SPEED
+		setSize 0.5, %VIDWIDTH / 80 // (800 / 80) = 10
+	endif
+	if 2 & %SHOW_SPEED
+		setSize 0.5, %VIDWIDTH / 140 // (800 / 80) = 10
+	endif
+	setColor 1, 1, 1, 1
+	setAlign #CENTER, #BOTTOM
+	drawPicByName gfx/ui/white
+
+endif
+endif

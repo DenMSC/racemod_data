@@ -1,0 +1,16 @@
+"Show helpers" "cg_showSpeed"
+"1" "speed + angles"
+"3" "speed"
+"5" "speed + angles, no colors"
+"0" "none"
+
+"Show pressed keys" "cg_showPressedKeys"
+"2" "always show"
+"1" "show in spec only"
+"0" "none"
+
+"Strafe HUD" "cg_strafeHUD"
+"1" "strafe helpers"
+"2" "acceleration bar"
+"3" "strafe + accel bar"
+"0" "none"

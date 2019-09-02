@@ -1,0 +1,31 @@
+//accelmeter bar
+if %MATCH_STATE == 3
+	if %CHASING == #NOTSET
+		if 2 & %SHOW_STRAFE
+			setScale #DEFAULTSCALE
+			setFontFamily "Virtue"
+			setFontSize %VIDHEIGHT / 80
+			setCursor #WIDTH / 2, #HEIGHT / 1.33
+			setScale #SCALEBYWIDTH
+			moveCursor -103, 8
+
+			setSize 206, 16
+			setcolor 1, 1, 1, 0.1
+			setAlign #TOP, #MIDDLE
+			drawPicByName gfx/ui/white
+			
+			moveCursor 3, 0
+			setSize 200, 10
+			if 85 >= %ACCELERATION * 100 / %PROGRESS_SELF
+				setColor %ACCELERATION / %PROGRESS_SELF, %ACCELERATION / %PROGRESS_SELF, %ACCELERATION / %PROGRESS_SELF, 0.4
+			endif
+			if 85 <= %ACCELERATION * 100 / %PROGRESS_SELF
+				setColor 2 + %ACCELERATION * -2 / %PROGRESS_SELF, %ACCELERATION / %PROGRESS_SELF, 0, 0.4
+			endif
+			drawBar %ACCELERATION, %PROGRESS_SELF
+			moveCursor 103, 0
+			setColor 1, 1, 1, 1
+			setScale #DEFAULTSCALE
+		endif
+	endif
+endif

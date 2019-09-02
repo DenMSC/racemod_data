@@ -1,0 +1,37 @@
+Timer:
+------
+Moved to top and altered layout, like racesow
+Green if below your personal best, red if above
+Always green if no pbest on current map
+
+
+Pbest/server best info:
+------
+Moved to bottom right corner and altered layout
+Only displayed while showing scoreboard
+Colored yellow/green respectively, like racesow
+
+
+Top 3
+------
+Moved top 3 to centerview above scoreboard
+Only show top 3 while showing scoreboard
+Added background behind top 3 with varying size depending on if 1, 2 or 3+ players have times on current map
+
+
+Other
+------
+Moved and resized speedometer
+Ported horizontal and vertical angle meter from racesow
+Pressedkeys only visible while spectating someone
+Hiding top3 background, speedometer, angle meter, showpressedkeys and pbest/serverbest info during post-match state
+Added minimalistic version of strafe, speed and angle indicators at cg_showspeed 2
+
+
+
+2016-02-09
+Made initial entry with all current changes up until this point
+
+2016-04-13
+Made a seperate hud (ale_racemod) for the Racemod servers, which utilize racesow's more accurate strafe bars and adds a coloring effect to strafe bars depending on strafe quality
+Added cg_showPressedKeys 2 for constant printing of keystate (not just while chasing)

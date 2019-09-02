@@ -1,0 +1,6 @@
+setFontFamily con_fontSystem
+setFontSize con_fontSystemSmall
+setScale #DEFAULTSCALE
+setAlign #CENTER, #MIDDLE
+setCursor #WIDTH / 2, #HEIGHT / 2
+drawCrosshair

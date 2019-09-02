@@ -1,0 +1,40 @@
+if %SCOREBOARD == 1
+
+if %TIME_RECORD != 0
+if %MATCH_STATE == 3
+	setColor 0, 0, 0, 0.4
+	setCursor #WIDTH / 2, #HEIGHT / 16.75
+	if %MESSAGE_OTHER
+		setSize #WIDTH / 5, #HEIGHT / 45
+	endif
+	if %MESSAGE_ALPHA
+		setSize #WIDTH / 5, #HEIGHT / 22.5
+	endif
+	if %MESSAGE_BETA
+		setSize #WIDTH / 5, #HEIGHT / 15.5
+	endif
+
+	setAlign #CENTER, #TOP
+	drawPicByName $whiteimage
+endif
+endif
+	setFontSize 0.55 * %VIDHEIGHT / 38
+	setFontFamily con_fontSystem
+	setAlign #CENTER, #TOP
+	setColor 1, 1, 1, 1
+
+	if %MESSAGE_OTHER
+		setCursor #WIDTH / 2, #HEIGHT / 16
+		drawStatString %MESSAGE_OTHER
+	endif
+
+	if %MESSAGE_ALPHA
+		setCursor #WIDTH / 2, #HEIGHT / 12
+		drawStatString %MESSAGE_ALPHA
+	endif
+
+	if %MESSAGE_BETA
+		setCursor #WIDTH / 2, #HEIGHT / 9.6
+		drawStatString %MESSAGE_BETA
+	endif
+endif

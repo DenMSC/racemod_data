@@ -1,0 +1,29 @@
+setScale #DEFAULTSCALE
+setCursor #WIDTH / 2, #HEIGHT / 1.6
+setColor 1, 1, 1, 0.2
+setFontFamily "Virtue"
+
+if %TIME_SELF != #NOTSET
+	if %TIME_SELF < 20
+		if %PROGRESS_OTHER > 0
+			setFontSize %VIDHEIGHT / 110
+			setAlign #CENTER, #BOTTOM
+			drawstring "Start speed:"
+			setAlign #CENTER, #TOP
+			setFontFamily "Virtue"
+			setFontSize %VIDHEIGHT / 75
+			setColor 0, 0, 0, 1
+			moveCursor -0.5, -0.5
+			drawStringNum %PROGRESS_OTHER
+			moveCursor 1, 0
+			drawStringNum %PROGRESS_OTHER
+			moveCursor 0, 1
+			drawStringNum %PROGRESS_OTHER
+			moveCursor -1, 0
+			drawStringNum %PROGRESS_OTHER
+			moveCursor 0.5, -0.5
+			setColor 1, 1, 1, 1
+			drawStringNum %PROGRESS_OTHER
+		endif
+	endif
+endif

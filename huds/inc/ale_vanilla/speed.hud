@@ -1,0 +1,23 @@
+//"new style" speedometer
+
+if 1 & %SHOW_SPEED
+if %MATCH_STATE == 3
+	setCursor #WIDTH / 2, #HEIGHT / 1.87
+	setAlign #CENTER, #MIDDLE
+	setFontFamily "Virtue"
+	setFontSize %VIDHEIGHT / 50
+	setColor 0, 0, 0, 1
+	drawStringNum %SPEED
+	moveCursor 0, 1
+	drawStringNum %SPEED
+	moveCursor 1, -1
+	drawStringNum %SPEED
+	moveCursor 0, 1
+	drawStringNum %SPEED
+	//white number
+	moveCursor -0.5, -0.5
+	setColor 1, 1, 1, 1
+	drawStringNum %SPEED
+	setScale #DEFAULTSCALE
+endif
+endif
