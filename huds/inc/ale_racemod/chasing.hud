@@ -1,0 +1,107 @@
+// Draws info about player you're chasing
+
+// Set defaults
+setFontFamily con_fontSystem
+setFontSize con_fontSystemSmall
+setFontStyle normal
+setScale #DEFAULTSCALE
+
+// Setup
+setCursor #WIDTH * 0.5, #HEIGHT * 0.8
+setAlign #CENTER, #TOP
+
+// Actual hud
+if %CHASING != #NOTSET
+	// Background box (setup)
+	setColor 0, 0, 0, 0.4
+
+	setSize #WIDTH / 2 * %VIDWIDTH / %VIDHEIGHT * 4 / 3, 32
+	if %TIME_BEST != 0 // Time set
+		setHeight 57
+	endif
+
+	// Background box (main)
+	drawPicByName $whiteimage
+
+
+	// "Currently chasing" (setup)
+	setFontFamily "Hemi Head"
+	setFontSize %VIDHEIGHT / 60
+
+	// "Currently chasing" (outlines)
+	setColor 0, 0, 0, 1
+	moveCursor -0.5, -0.5
+	drawString "Currently chasing:"
+	moveCursor 1, 0
+	drawString "Currently chasing:"
+	moveCursor 0, 1
+	drawString "Currently chasing:"
+	moveCursor -1, 0
+	drawString "Currently chasing:"
+	moveCursor 0.5, -0.5
+
+	// "Currently chasing" (main)
+	setColor 1, 1, 1, 1
+	drawString "Currently chasing:"
+
+
+	moveCursor 0, 10
+
+
+	// <Player name>
+	setFontFamily con_fontSystem // TODO should be fixed?
+	setFontSize %VIDHEIGHT / 30
+	setColor 1, 1, 1, 1
+	drawPlayerName %CHASING
+
+
+	moveCursor 0, 20
+
+
+	// Player best time (best lap in the race)
+	if %TIME_BEST != 0
+		// "Personal best" (setup)
+		setFontFamily "Hemi Head"
+		setFontSize %VIDHEIGHT / 50
+
+		// "Personal best" (outlines)
+		setColor 0, 0, 0, 1
+		moveCursor -0.5, -0.5
+		drawString "Personal best:"
+		moveCursor 1, 0
+		drawString "Personal best:"
+		moveCursor 0, 1
+		drawString "Personal best:"
+		moveCursor -1, 0
+		drawString "Personal best:"
+		moveCursor 0.5, -0.5
+
+		// "Personal best" (main)
+		setColor 1, 1, 1, 1
+		drawString "Personal best:"
+
+
+		moveCursor 0, 12
+
+
+		// <Personal best time> (setup)
+		setFontFamily "Hemi Head"
+		setFontSize %VIDHEIGHT / 50
+		
+		// <Personal best time> (outlines)
+		setColor 0, 0, 0, 1
+		moveCursor -0.5, -0.5
+		drawTimer %TIME_BEST
+		moveCursor 1, 0
+		drawTimer %TIME_BEST
+		moveCursor 0, 1
+		drawTimer %TIME_BEST
+		moveCursor -1, 0
+		drawTimer %TIME_BEST
+		moveCursor 0.5, -0.5
+
+		// <Personal best time> (main)
+		setColor 1, 1, 1, 1
+		drawTimer %TIME_BEST
+	endif
+endif

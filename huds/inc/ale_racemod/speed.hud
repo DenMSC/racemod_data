@@ -1,0 +1,34 @@
+// Draws the "new style" speedometer
+
+// Set defaults
+setFontFamily con_fontSystem
+setFontSize con_fontSystemSmall
+setFontStyle normal
+setScale #DEFAULTSCALE
+
+// Setup
+setCursor #WIDTH * 0.5, #HEIGHT * 0.535
+setAlign #CENTER, #MIDDLE
+
+// Actual hud
+if %SHOW_SPEED
+	// <speed> (setup)
+	setFontFamily "Virtue"
+	setFontSize %VIDHEIGHT / 50
+
+	// <speed> (outlines)
+	setColor 0, 0, 0, 1
+	moveCursor -0.5, -0.5
+	drawStringNum %SPEED
+	moveCursor 1, 0
+	drawStringNum %SPEED
+	moveCursor 0, 1
+	drawStringNum %SPEED
+	moveCursor -1, 0
+	drawStringNum %SPEED
+	moveCursor 0.5, -0.5
+
+	// <speed> (main)
+	setColor 1, 1, 1, 1
+	drawStringNum %SPEED
+endif

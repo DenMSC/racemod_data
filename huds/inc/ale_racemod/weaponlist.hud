@@ -1,0 +1,19 @@
+// Draws weaponlist
+
+// Set defaults
+setFontFamily con_fontSystem
+setFontSize con_fontSystemSmall
+setFontStyle normal
+setScale #DEFAULTSCALE
+
+// Setup
+setCursor #WIDTH * 0.5, #HEIGHT - 40
+setAlign #CENTER, #MIDDLE
+
+// Actual hud
+if %WEAPON_ITEM
+	moveCursor 12.5 * %VIDHEIGHT / %VIDWIDTH * 4 / 3, 0
+
+	// draw selected gun
+	drawWeaponIcons 48 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 0, 48 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 48
+endif

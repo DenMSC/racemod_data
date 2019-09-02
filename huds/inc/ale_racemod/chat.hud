@@ -1,0 +1,39 @@
+// Draws chat box
+
+// Set defaults
+setFontFamily con_fontSystem
+setFontSize con_fontSystemSmall
+setFontStyle normal
+setScale #DEFAULTSCALE
+
+// Setup
+setAlign #LEFT, #TOP
+
+// Actual hud
+setFontSize %VIDHEIGHT / 50
+if %SOFTKEYBOARD
+	setFontSize %VIDHEIGHT / 35
+endif
+
+setSize #WIDTH - 20 * %VIDHEIGHT / %VIDWIDTH * 4 / 3, 130
+setCursor 10 * %VIDHEIGHT / %VIDWIDTH * 4 / 3, 85
+
+ifnot %CHAT_MODE && %SOFTKEYBOARD
+	moveCursor 0, 305
+	if %CHASING != #NOTSET
+		moveCursor 0, -30
+	endif
+endif
+
+setColor 0 0 0 0
+if %CHAT_MODE > 0
+	setColor 0 0 0 1
+endif
+
+drawChat 7 * %VIDHEIGHT / %VIDWIDTH * 4 / 3, 6, "gfx/2d/chat1"
+
+if %CHAT_MODE > 0
+	setSize 32 * %VIDHEIGHT / %VIDWIDTH * 4 / 3, 32
+	moveCursor #WIDTH - 60 * %VIDHEIGHT / %VIDWIDTH * 4 / 3, 90
+	drawPicByName "gfx/2d/bubblechat"
+endif

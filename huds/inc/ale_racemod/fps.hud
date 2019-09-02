@@ -1,0 +1,18 @@
+// Draws FPS in top-right corner
+
+// Set defaults
+setFontFamily con_fontSystem
+setFontSize con_fontSystemSmall
+setFontStyle normal
+setScale #DEFAULTSCALE
+
+// Setup
+setCursor #WIDTH - 1, 1
+setAlign #RIGHT, #TOP
+
+// Actual hud
+if %SHOW_FPS
+	setColor 1, 1, 1, 1
+	setSize 8, 8 * %VIDWIDTH / %VIDHEIGHT * 4 / 3
+	drawNum %FPS
+endif

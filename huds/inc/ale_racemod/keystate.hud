@@ -1,0 +1,32 @@
+setScale #DEFAULTSCALE
+setAlign #CENTER, #BOTTOM
+setSize 32 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 32
+setCursor #WIDTH, 232 //base positions
+
+if %SHOW_R_SPEEDS < 0
+	moveCursor 0, -60
+endif
+
+moveCursor -70 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 0
+drawKeyState jump
+
+moveCursor 0 33
+drawKeyState forward
+
+moveCursor -32 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 0
+drawKeyState fire
+
+moveCursor 64 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 0
+drawKeyState special
+
+moveCursor 0 33
+drawKeyState right
+
+moveCursor -32 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 0
+drawKeyState backward
+
+moveCursor -32 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 0
+drawKeyState left
+
+moveCursor 32 * 1.3333333333 * %VIDHEIGHT / %VIDWIDTH, 33
+drawKeyState crouch

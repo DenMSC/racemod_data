@@ -1,31 +1,43 @@
-//accelmeter bar
-if %MATCH_STATE == 3
-	if %CHASING == #NOTSET
-		if 2 & %SHOW_STRAFE
-			setScale #DEFAULTSCALE
-			setFontFamily "Virtue"
-			setFontSize %VIDHEIGHT / 80
-			setCursor #WIDTH / 2, #HEIGHT / 1.33
-			setScale #SCALEBYWIDTH
-			moveCursor -103, 8
+if %CHASING == #NOTSET
+	if 0 != %SHOW_STRAFE & 2 + 1
+		setCursor #WIDTH / 2, #HEIGHT / 1.33
+		setScale #SCALEBYWIDTH
+		moveCursor -103, 8
+		setSize 206, 16
+		setcolor 1, 1, 1, 0.1
+		setAlign #TOP, #MIDDLE
+		drawPicByName gfx/ui/white
+		
+		moveCursor 3, 0
+		setSize 200, 10
 
-			setSize 206, 16
-			setcolor 1, 1, 1, 0.1
-			setAlign #TOP, #MIDDLE
-			drawPicByName gfx/ui/white
-			
-			moveCursor 3, 0
-			setSize 200, 10
-			if 85 >= %ACCELERATION * 100 / %PROGRESS_SELF
-				setColor %ACCELERATION / %PROGRESS_SELF, %ACCELERATION / %PROGRESS_SELF, %ACCELERATION / %PROGRESS_SELF, 0.4
+
+		if %DIFF_ANGLE != 0
+			if 0 <= %DIFF_ANGLE * 0 == %DIFF_ANGLE > -4500 * %DIFF_ANGLE < -1 * %STRAFEANGLE - 0.000005 * %MOUSE_Y * %MOUSE_Y
+			if 0 >= %DIFF_ANGLE * 0 == %DIFF_ANGLE < 4500 * %DIFF_ANGLE > %STRAFEANGLE - 0.000005 * %MOUSE_Y * %MOUSE_Y
+
+				if 0.85 >= %ACCELERATION / %PROGRESS_SELF
+					setColor 0.5, 0.5, 0.5, 0.15 + %ACCELERATION / %PROGRESS_SELF
+					if 0.5 >= %ACCELERATION / %PROGRESS_SELF
+						setColor 0.5, 0.5, 0.5, 0.8
+					endif
+				endif
+				if 0.85 < %ACCELERATION / %PROGRESS_SELF
+					setColor 0, %ACCELERATION / %PROGRESS_SELF, 0, 0.15 + %ACCELERATION / %PROGRESS_SELF
+				endif
 			endif
-			if 85 <= %ACCELERATION * 100 / %PROGRESS_SELF
-				setColor 2 + %ACCELERATION * -2 / %PROGRESS_SELF, %ACCELERATION / %PROGRESS_SELF, 0, 0.4
 			endif
+		endif
+		if 1.5 < %ACCELERATION / %PROGRESS_SELF
+				setColor 0, 1, 1, 0.1 * %ACCELERATION / %PROGRESS_SELF
+		endif
+		if 1.5 < %ACCELERATION / %PROGRESS_SELF
+			if %SPEED > 470
+					drawBar %ACCELERATION / 10.5, %PROGRESS_SELF
+			endif
+		endif
+		if 1.5 >= %ACCELERATION / %PROGRESS_SELF
 			drawBar %ACCELERATION, %PROGRESS_SELF
-			moveCursor 103, 0
-			setColor 1, 1, 1, 1
-			setScale #DEFAULTSCALE
 		endif
 	endif
 endif

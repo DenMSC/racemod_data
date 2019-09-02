@@ -1,0 +1,17 @@
+// Draws awards
+
+// Set defaults
+setFontFamily con_fontSystem
+setFontSize con_fontSystemSmall
+setFontStyle normal
+setScale #DEFAULTSCALE
+
+// Setup
+setCursor #WIDTH * 0.5, #HEIGHT * 0.18
+setAlign #CENTER, #BOTTOM
+
+// Actual hud
+setFontFamily "Hemi Head"
+setFontSize %VIDHEIGHT / 40
+setColor 1, 1, 1, 1
+drawAwards

@@ -4,11 +4,11 @@ setColor 1, 1, 1, 0.2
 setFontFamily "Virtue"
 
 if %TIME_SELF != #NOTSET
-	if %TIME_SELF < 20
+	if 0 < %TIME_SELF * %TIME_SELF <= 20
 		if %PROGRESS_OTHER > 0
 			setFontSize %VIDHEIGHT / 110
 			setAlign #CENTER, #BOTTOM
-			drawstring "Start speed:"
+			drawString "Start speed:"
 			setAlign #CENTER, #TOP
 			setFontFamily "Virtue"
 			setFontSize %VIDHEIGHT / 75

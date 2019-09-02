@@ -1,9 +1,0 @@
-setFontFamily "Hemi Head"
-setFontSize %VIDHEIGHT / 40
-setColor 1, 1, 1, 1
-setCursor 400 110
-
-if %SCOREBOARD == 0
-setAlign #CENTER, #BOTTOM
-drawAwards
-endif

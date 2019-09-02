@@ -1,0 +1,36 @@
+// Draws help message at top of screen
+
+// Set defaults
+setFontFamily con_fontSystem
+setFontSize con_fontSystemSmall
+setFontStyle normal
+setScale #DEFAULTSCALE
+
+// Setup
+setCursor #WIDTH * 0.5, #HEIGHT * 0.15
+setAlign #CENTER, #TOP
+setFontSize %VIDHEIGHT / 40
+
+// Actual hud
+ifnot %CHAT_MODE && %SOFTKEYBOARD
+	if %TUTORIAL != 0
+	if %MATCH_STATE == #MATCH_STATE_WARMUP
+		setCursor #WIDTH / 2, 0
+		if %SPEED >= 30 //hack avoiding crazy bg animation at stacking in corners
+			setCursor #WIDTH / 2, -0.7 * %SPEED - 30 // (#HEIGHT*0.33)/(320-30)=0.7
+		endif
+		setSize 750 * %VIDHEIGHT / %VIDWIDTH * 4 / 3, #HEIGHT * 0.33
+		setColor 1, 1, 1, 1.0
+		drawPicByName gfx/hud/help_bg //background for le text
+
+		setCursor #WIDTH * 0.5, 15
+	endif
+	endif
+
+	if %TUTORIAL == 0
+		setColor 1 1 1 0.5
+	endif
+
+	setSize #WIDTH, 32
+	drawHelpString
+endif

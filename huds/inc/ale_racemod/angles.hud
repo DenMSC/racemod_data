@@ -1,0 +1,342 @@
+//mouse angles
+
+setFontFamily "Virtue"
+setFontSize %VIDHEIGHT / 100
+
+
+setScale #DEFAULTSCALE
+setCursor 400, 300
+setColor 1, 1, 1, 1
+
+if 0 != %SHOW_STRAFE & 4 + 1
+	//vertical bar
+	setCursor #WIDTH / 2.3, #HEIGHT / 1.9
+	setSize 1, 46
+	setAlign #LEFT, #MIDDLE
+	drawPicByName gfx/ui/white
+
+	//move Cursor with mouse position
+	moveCursor 0, 0.0025 * %MOUSE_Y
+
+	//horizontal bar
+	setSize 15, 1
+	setAlign #RIGHT, #MIDDLE
+	drawPicByName gfx/ui/white
+
+	//angle number
+	setColor 0, 0, 0, 1
+	moveCursor -4, 0
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	moveCursor 1, 0
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	moveCursor 0, 1
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	moveCursor -1, 0
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+	setColor 1, 1, 1, 1
+
+	//color plasma angles green
+		if %WEAPON_ITEM == #WEAP_PLASMAGUN
+			//climb angles
+				if %SPEED > 0
+					if 1200000 > %DIFF_ANGLE * %DIFF_ANGLE
+						if 6999 < %MOUSE_Y * %MOUSE_Y < 7299
+							setColor 1, 1, 0, 1
+						endif
+
+						if 7099 < %MOUSE_Y * %MOUSE_Y < 7199
+							setColor 0, 1, 0, 1
+						endif
+					endif
+
+					if 54000000 < %DIFF_ANGLE * %DIFF_ANGLE
+						if 6999 < %MOUSE_Y * %MOUSE_Y < 7299
+							setColor 1, 1, 0, 1
+						endif
+
+						if 7099 < %MOUSE_Y * %MOUSE_Y < 7199
+							setColor 0, 1, 0, 1
+						endif
+					endif
+
+				endif
+
+				if %SPEED == 0
+					if 6999 < %MOUSE_Y * %MOUSE_Y < 7299
+						setColor 1, 1, 0, 1
+					endif
+
+					if 7099 < %MOUSE_Y * %MOUSE_Y < 7199
+						setColor 0, 1, 0, 1
+					endif
+				endif
+
+			//descend angle 
+				if %SPEED > 0
+					if 1200000 > %DIFF_ANGLE * %DIFF_ANGLE
+						if -5099 > %MOUSE_Y * %MOUSE_Y > -5699
+							setColor 1, 1, 0, 1
+						endif
+
+						if -5299 > %MOUSE_Y * %MOUSE_Y > -5499
+							setColor 0, 1, 0, 1
+						endif
+					endif
+
+					if 54000000 < %DIFF_ANGLE * %DIFF_ANGLE
+						if -5099 > %MOUSE_Y * %MOUSE_Y > -5699
+							setColor 1, 1, 0, 1
+						endif
+
+						if -5299 > %MOUSE_Y * %MOUSE_Y > -5499
+							setColor 0, 1, 0, 1
+						endif
+					endif
+				endif
+
+				if %SPEED == 0
+					if -5199 > %MOUSE_Y * %MOUSE_Y > -5799
+						setColor 1, 1, 0, 1
+					endif
+
+					if -5399 > %MOUSE_Y * %MOUSE_Y > -5599
+						setColor 0, 1, 0, 1
+					endif
+				endif
+			//
+
+			//sideways climb
+				if %SPEED > 0
+					if 6600000 < %DIFF_ANGLE * %DIFF_ANGLE * 35600000 > %DIFF_ANGLE * %DIFF_ANGLE
+						if 5399 < %MOUSE_Y * %MOUSE_Y < 6599
+							setColor 1, 1, 0, 1
+						endif
+						if 5599 < %MOUSE_Y * %MOUSE_Y < 6399
+							setColor 0, 1, 0, 1
+						endif
+					endif
+				endif
+			//
+			//sideways descend
+				if %SPEED > 0
+					if 6600000 < %DIFF_ANGLE * %DIFF_ANGLE * 35600000 > %DIFF_ANGLE * %DIFF_ANGLE
+						if -1699 > %MOUSE_Y * %MOUSE_Y > -3099
+							setColor 1, 1, 0, 1
+						endif
+						if -2199 > %MOUSE_Y * %MOUSE_Y > -2999
+							setColor 0, 1, 0, 1
+						endif
+					endif
+				endif
+		endif
+
+	moveCursor 0.5, -0.5
+	setAlign #RIGHT, #TOP
+	drawStringNum 0.01 * %MOUSE_Y
+	setAlign #LEFT, #TOP
+	drawString "°"
+endif
+
+//horizontal angle meter
+if 0 != %SHOW_STRAFE & 4 + 1
+	if %SPEED > 0
+		setCursor #WIDTH / 1.97, #HEIGHT / 1.75
+
+
+		setColor 0, 0, 0, 1
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %DIFF_ANGLE
+		setAlign #LEFT, #TOP
+		drawString "°"
+
+		moveCursor 1, 0
+
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %DIFF_ANGLE
+		setAlign #LEFT, #TOP
+		drawString "°"
+
+		moveCursor 0, 1
+
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %DIFF_ANGLE
+		setAlign #LEFT, #TOP
+		drawString "°"
+
+		moveCursor -1, 0
+
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %DIFF_ANGLE
+		setAlign #LEFT, #TOP
+		drawString "°"
+
+		moveCursor 0.5, -0.5
+
+		setColor 1, 1, 1, 1
+
+		//Color plasma angles green (bitmask)
+			if 0 == 4 & %SHOW_SPEED
+				if %WEAPON_ITEM == #WEAP_PLASMAGUN
+
+					//climb
+						if 6600 < %MOUSE_Y * %MOUSE_Y < 7600
+							if 64500000 < %DIFF_ANGLE * %DIFF_ANGLE
+								setColor 1, 1, 0, 1
+							endif
+							if 70000000 < %DIFF_ANGLE * %DIFF_ANGLE
+								setColor 0, 1, 0, 1
+							endif
+							if 160000 > %DIFF_ANGLE * %DIFF_ANGLE
+								setColor 1, 1, 0, 1
+							endif
+							if 100000 > %DIFF_ANGLE * %DIFF_ANGLE
+								setColor 0, 1, 0, 1
+							endif
+						endif
+					//
+
+						if -4900 > %MOUSE_Y * %MOUSE_Y > -5900
+							if 64500000 < %DIFF_ANGLE * %DIFF_ANGLE
+								setColor 1, 1, 0, 1
+							endif
+							if 68900000 < %DIFF_ANGLE * %DIFF_ANGLE
+								setColor 0, 1, 0, 1
+							endif
+						endif
+
+					//descend
+
+
+					//sideways climb
+						if 4800 < %MOUSE_Y * %MOUSE_Y < 7300
+							if 3999 < %DIFF_ANGLE * %DIFF_ANGLE < 4599
+								setColor 1, 1, 0, 1
+								if 4099 < %DIFF_ANGLE * %DIFF_ANGLE < 4499
+									setColor 0, 1, 0, 1
+								endif
+							endif
+							if -3999 > %DIFF_ANGLE * %DIFF_ANGLE > -4599
+								setColor 1, 1, 0, 1
+								if -4099 > %DIFF_ANGLE * %DIFF_ANGLE > -4499
+									setColor 0, 1, 0, 1
+								endif
+							endif
+						endif
+						if -1600 > %MOUSE_Y * %MOUSE_Y > -4000
+							if 3999 < %DIFF_ANGLE * %DIFF_ANGLE < 4599
+								setColor 1, 1, 0, 1
+								if 4099 < %DIFF_ANGLE * %DIFF_ANGLE < 4499
+									setColor 0, 1, 0, 1
+								endif
+							endif
+							if -3999 > %DIFF_ANGLE * %DIFF_ANGLE > -4599
+								setColor 1, 1, 0, 1
+								if -4099 > %DIFF_ANGLE * %DIFF_ANGLE > -4499
+									setColor 0, 1, 0, 1
+								endif
+							endif
+						endif
+					//
+				endif
+			endif
+		//
+
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %DIFF_ANGLE
+		setAlign #LEFT, #TOP
+		drawString "°"
+	endif
+
+
+	if %SPEED == 0
+		//set angle to display 0 when no movement to prevent confusion from absolute angle effect
+			setCursor #WIDTH / 1.97, #HEIGHT / 1.75
+
+			setColor 0, 0, 0, 1
+			setAlign #RIGHT, #TOP
+			drawString "0"
+			setAlign #LEFT, #TOP
+			drawString "°"
+
+			moveCursor 1, 0
+
+			setAlign #RIGHT, #TOP
+			drawString "0"
+			setAlign #LEFT, #TOP
+			drawString "°"
+
+			moveCursor 0, 1
+
+			setAlign #RIGHT, #TOP
+			drawString "0"
+			setAlign #LEFT, #TOP
+			drawString "°"
+
+			moveCursor -1, 0
+
+			setAlign #RIGHT, #TOP
+			drawString "0"
+			setAlign #LEFT, #TOP
+			drawString "°"
+
+			moveCursor 0.5, -0.5
+
+			setColor 1, 1, 1, 1
+			setAlign #RIGHT, #TOP
+			drawString "0"
+			setAlign #LEFT, #TOP
+			drawString "°"
+		//
+	endif
+
+	//display absolute angle in bottom right corner
+		setCursor #WIDTH / 1.01, #HEIGHT / 1.05
+
+		setColor 0, 0, 0, 1
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %MOUSE_X
+		setAlign #LEFT, #TOP
+		drawString "°"
+
+		moveCursor 1, 0
+
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %MOUSE_X
+		setAlign #LEFT, #TOP
+		drawString "°"
+
+		moveCursor 0, 1
+
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %MOUSE_X
+		setAlign #LEFT, #TOP
+		drawString "°"
+
+		moveCursor -1, 0
+
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %MOUSE_X
+		setAlign #LEFT, #TOP
+		drawString "°"
+
+		moveCursor 0.5, -0.5
+
+		setColor 1, 1, 1, 1
+		setAlign #RIGHT, #TOP
+		drawStringNum 0.01 * %MOUSE_X
+		setAlign #LEFT, #TOP
+		drawString "°"
+	//
+endif

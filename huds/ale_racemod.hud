@@ -1,21 +1,40 @@
-setFontFamily con_fontSystem
-setFontSize con_fontSystemSmall
-setScale #DEFAULTSCALE
-include ale_vanilla/fps
-include ale_vanilla/chasing
-include ale_vanilla/speed
-include ale_racemod/acceleration
-include ale_vanilla/help_message
-include ale_vanilla/awards
-include chat
-include ale_vanilla/weaponlist
-include ale_vanilla/health
-include ale_racemod/startspeed
-include pointing
-include ale_vanilla/crosshair
-include ale_vanilla/keystate
-include ale_vanilla/angles
-include ale_vanilla/team_info
-include ale_vanilla/timer
-include ale_racemod/strafe
-include ale_vanilla/times
+
+if %MATCH_STATE >= 3
+  include ale_racemod/awards
+  include ale_racemod/crosshair
+  include ale_racemod/pointing
+  include ale_racemod/strafe
+  include ale_racemod/angles
+  include ale_racemod/speed
+  include ale_racemod/startspeed
+  include ale_racemod/acceleration
+  if %SHOW_PRESSED_KEYS == 1
+    if %CHASING != #NOTSET
+      include ale_racemod/keystate
+    endif
+  endif
+  if %SHOW_PRESSED_KEYS == 2
+    include ale_racemod/keystate
+  endif
+  include ale_racemod/timer
+  include ale_racemod/team_info
+  include ale_racemod/health
+  include ale_racemod/weaponlist
+  include ale_racemod/help_message
+  include ale_racemod/chasing
+endif
+include ale_racemod/fps
+include ale_racemod/chat
+
+/*
+Bitmask cg_showStrafe:
+000001 (1): Default settings all (accel bar off)
+000010 (2): Show accel bar
+000100 (4): Hide angles
+001000 (8): Hide strafe bars
+010000 (16): Show bunny helper
+
+cg_showPressedKeys:
+1 = Only show while spectating
+2 = Always show
+*/

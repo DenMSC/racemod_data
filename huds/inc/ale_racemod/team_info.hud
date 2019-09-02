@@ -1,4 +1,6 @@
+setScale #DEFAULTSCALE
 if %SCOREBOARD == 1
+
 
 if %TIME_RECORD != 0
 if %MATCH_STATE == 3
