@@ -1,0 +1,65 @@
+setFontSize %VIDHEIGHT / 72
+setCursor #WIDTH / 2.04, #HEIGHT / 25
+setFontFamily "Hemi Head"
+
+if %TIME_BEST != 0
+if %TIME_SELF != #NOTSET
+	if %TIME_SELF >= 0 // current time is between 0:00.1 and 54:36.7
+		moveCursor -0.5, -0.5
+		setColor 0,0,0,1
+		setAlign #LEFT, #MIDDLE
+		drawTimer %TIME_SELF
+		
+		moveCursor 1, 0
+		setAlign #LEFT, #MIDDLE
+		drawTimer %TIME_SELF
+
+		moveCursor 0, 1
+		setAlign #LEFT, #MIDDLE
+		drawTimer %TIME_SELF
+
+		moveCursor -1, 0
+		setAlign #LEFT, #MIDDLE
+		drawTimer %TIME_SELF
+		
+		moveCursor 0.5, -0.5
+		setColor 0,1,0,1
+		if %TIME_BEST >= 0
+		if %TIME_SELF > %TIME_BEST // behind rec
+			setColor 1,0,0,1 // red timer
+		endif
+		endif
+		setAlign #LEFT, #MIDDLE
+		drawTimer %TIME_SELF
+	endif
+	if %TIME_SELF < 0 // current time is between 54:36.8 and 109:03.4 (always behind rec)
+		moveCursor -0.5, -0.5
+		setColor 0,0,0,1
+		setAlign #LEFT, #MIDDLE
+		drawTimer 65536 + %TIME_SELF
+
+		moveCursor 1, 0
+		setAlign #LEFT, #MIDDLE
+		drawTimer 65536 + %TIME_SELF
+
+		moveCursor 0, 1
+		setAlign #LEFT, #MIDDLE
+		drawTimer 65536 + %TIME_SELF
+
+		moveCursor -1, 0
+		setAlign #LEFT, #MIDDLE
+		drawTimer 65536 + %TIME_SELF
+		
+		moveCursor 0.5, -0.5
+		setColor 0,1,0,1
+		if %TIME_BEST >= 0
+			setColor 1,0,0,1 // red timer
+		endif
+		if %TIME_SELF > %TIME_BEST
+			setColor 1,0,0,1 // red timer
+		endif
+		setAlign #LEFT, #MIDDLE
+		drawTimer 65536 + %TIME_SELF
+	endif
+endif
+endif

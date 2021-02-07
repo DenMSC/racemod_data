@@ -17,6 +17,7 @@ if %MATCH_STATE >= 3
     include ale_racemod/keystate
   endif
   include ale_racemod/timer
+  include ale_racemod/timer2
   include ale_racemod/team_info
   include ale_racemod/health
   include ale_racemod/weaponlist
