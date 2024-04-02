@@ -112,7 +112,7 @@
 				// parse hud options file
 				HUDOption@[] hudOptions = parseHUDOptions( contents );
 
-				for ( uint i = 0; i < hudOptions.length; i++ ) 
+				for ( uint i = 0; i < hudOptions.length(); i++ ) 
 				{
 					rml += hudOptions[i].render();
 				}

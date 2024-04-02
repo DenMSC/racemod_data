@@ -7,7 +7,7 @@ HUDOption@[] parseHUDOptions( String file )
   HUDOption@[] options;
   // split by \n\n
   String@[] raw_options = StringUtils::Split(file, "\n\n");
-  for ( uint i = 0; i < raw_options.length; i++ )
+  for ( uint i = 0; i < raw_options.length(); i++ )
   {
     String raw_option = raw_options[i];
 
@@ -93,7 +93,7 @@ class HUDOptionDropdown : HUDOption
     String rml = "";
     rml += '<div class="title">' + this.title + '</div>';
     rml += '<select cvar="' + this.cvar + '" realtime="1">';
-    for ( uint j = 0; j < this.options.length; j++ )
+    for ( uint j = 0; j < this.options.length(); j++ )
     {
       HUDOptionChoice@ choice = @this.options[j];
       rml += '<option value="' + choice.value + '">' + choice.title + '</option>';
@@ -119,7 +119,7 @@ class HUDOptionCheckboxes : HUDOption
 
     int currSum = 0;
     int defaultSum = 0;
-    for ( uint i = 0; i < this.options.length; i++ )
+    for ( uint i = 0; i < this.options.length(); i++ )
     {
       HUDOptionChoice@ choice = @this.options[i];
 
@@ -156,7 +156,7 @@ class HUDOptionCheckboxes : HUDOption
     Cvar checkboxcvar(this.cvar, "0", ::CVAR_ARCHIVE);
     int cvarValue = checkboxcvar.integer;
     String rml = "";
-    for ( uint i = 0; i < this.options.length; i++ )
+    for ( uint i = 0; i < this.options.length(); i++ )
     {
       HUDOptionChoice@ choice = @this.options[i];
       bool active = (cvarValue & abs(choice.value)) != 0;
@@ -177,7 +177,7 @@ void onCheckboxes( Element @self)
 {
 
   String cvar = self.getAttr('checkboxcvar', '');
-  for ( uint i = 0; i < checkboxes.length; i++ )
+  for ( uint i = 0; i < checkboxes.length(); i++ )
   {
     if ( checkboxes[i].cvar == cvar ) {
       checkboxes[i].click(self);
